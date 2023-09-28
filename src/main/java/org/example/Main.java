@@ -2,40 +2,13 @@ package org.example;
 import java.util.Scanner;
 
 public class Main {
-    public static final int NUM_HABITACIONES = 10;
-    public static final int PRECIO_SIN_ALIMENTACION = 30000;
-    public static final int PRECIO_CON_ALIMENTACION = 45000;
+    private String[] estadoHabitaciones;
 
-    public static String[] estadoHabitaciones = new String[NUM_HABITACIONES];
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            mostrarMenu();
-            int opcion = scanner.nextInt();
-
-            switch (opcion) {
-                case 1:
-                    consultarEstadoHabitaciones();
-                    break;
-                case 2:
-                    reservarHabitacion();
-                    break;
-                case 3:
-                    liberarHabitacion();
-                    break;
-                case 4:
-                    System.out.println("Gracias por usar el sistema de administración del hotel.");
-                    scanner.close();
-                    System.exit(0);
-                default:
-                    System.out.println("Opción no válida. Intente nuevamente.");
-            }
-        }
+    public Main(int numHabitaciones) {
+        this.estadoHabitaciones = new String[numHabitaciones];
     }
 
-    public static void mostrarMenu() {
+    public void mostrarMenu() {
         System.out.println("\nMenú:");
         System.out.println("1. Consultar estado de habitaciones");
         System.out.println("2. Reservar habitación");
@@ -44,27 +17,28 @@ public class Main {
         System.out.print("Seleccione una opción: ");
     }
 
-    public static void consultarEstadoHabitaciones() {
+    public void consultarEstadoHabitaciones() {
         System.out.println("\nEstado de las habitaciones:");
-        for (int i = 0; i < NUM_HABITACIONES; i++) {
-            System.out.println("Habitación " + (i + 1) + ": " + obtenerEstadoHabitacion(i));
+        for (int i = 0; i < estadoHabitaciones.length; i++) {
+            String estado = obtenerEstadoHabitacion(i);
+            System.out.println("Habitación " + (i + 1) + ": " + estado);
         }
     }
 
-    public static String obtenerEstadoHabitacion(int numeroHabitacion) {
+    public String obtenerEstadoHabitacion(int numeroHabitacion) {
         String estado = estadoHabitaciones[numeroHabitacion];
         if (estado == null) {
-            return "Habitacion liberada";
+            return "Habitación liberada";
         } else {
             return estado;
         }
     }
 
-    public static void reservarHabitacion() {
+    public void reservarHabitacion() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Ingrese el número de habitación a reservar: ");
         int numeroHabitacion = scanner.nextInt() - 1;
-        if (numeroHabitacion >= 0 && numeroHabitacion < NUM_HABITACIONES) {
+        if (numeroHabitacion >= 0 && numeroHabitacion < estadoHabitaciones.length) {
             if (estadoHabitaciones[numeroHabitacion] == null) {
                 System.out.print("¿Desea incluir alimentación? (S/N): ");
                 char respuesta = scanner.next().charAt(0);
@@ -78,11 +52,11 @@ public class Main {
         }
     }
 
-    public static void liberarHabitacion() {
+    public void liberarHabitacion() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Ingrese el número de habitación a liberar: ");
         int numeroHabitacion = scanner.nextInt() - 1;
-        if (numeroHabitacion >= 0 && numeroHabitacion < NUM_HABITACIONES) {
+        if (numeroHabitacion >= 0 && numeroHabitacion < estadoHabitaciones.length) {
             if (estadoHabitaciones[numeroHabitacion] != null) {
                 estadoHabitaciones[numeroHabitacion] = null;
                 System.out.println("Habitación " + (numeroHabitacion + 1) + " liberada con éxito.");
@@ -91,6 +65,36 @@ public class Main {
             }
         } else {
             System.out.println("Número de habitación no válido.");
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese el número de habitaciones: ");
+        int numHabitaciones = scanner.nextInt();
+        Main hotel = new Main(numHabitaciones);
+
+        while (true) {
+            hotel.mostrarMenu();
+            int opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    hotel.consultarEstadoHabitaciones();
+                    break;
+                case 2:
+                    hotel.reservarHabitacion();
+                    break;
+                case 3:
+                    hotel.liberarHabitacion();
+                    break;
+                case 4:
+                    System.out.println("Gracias por usar el sistema de administración del hotel.");
+                    scanner.close();
+                    System.exit(0);
+                default:
+                    System.out.println("Opción no válida. Intente nuevamente.");
+            }
         }
     }
 }
