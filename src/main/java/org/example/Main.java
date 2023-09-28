@@ -2,11 +2,11 @@ package org.example;
 import java.util.Scanner;
 
 public class Main {
-    private static final int NUM_HABITACIONES = 10;
-    private static final int PRECIO_SIN_ALIMENTACION = 30000;
-    private static final int PRECIO_CON_ALIMENTACION = 45000;
+    public static final int NUM_HABITACIONES = 10;
+    public static final int PRECIO_SIN_ALIMENTACION = 30000;
+    public static final int PRECIO_CON_ALIMENTACION = 45000;
 
-    private static String[] estadoHabitaciones = new String[NUM_HABITACIONES];
+    public static String[] estadoHabitaciones = new String[NUM_HABITACIONES];
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -35,7 +35,7 @@ public class Main {
         }
     }
 
-    private static void mostrarMenu() {
+    public static void mostrarMenu() {
         System.out.println("\nMenú:");
         System.out.println("1. Consultar estado de habitaciones");
         System.out.println("2. Reservar habitación");
@@ -44,14 +44,14 @@ public class Main {
         System.out.print("Seleccione una opción: ");
     }
 
-    private static void consultarEstadoHabitaciones() {
+    public static void consultarEstadoHabitaciones() {
         System.out.println("\nEstado de las habitaciones:");
         for (int i = 0; i < NUM_HABITACIONES; i++) {
             System.out.println("Habitación " + (i + 1) + ": " + obtenerEstadoHabitacion(i));
         }
     }
 
-    private static String obtenerEstadoHabitacion(int numeroHabitacion) {
+    public static String obtenerEstadoHabitacion(int numeroHabitacion) {
         String estado = estadoHabitaciones[numeroHabitacion];
         if (estado == null) {
             return "Habitacion liberada";
@@ -60,10 +60,10 @@ public class Main {
         }
     }
 
-    private static void reservarHabitacion() {
+    public static void reservarHabitacion() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Ingrese el número de habitación a reservar: ");
-        int numeroHabitacion = scanner.nextInt() - 1; // Restamos 1 para ajustar al índice del arreglo
+        int numeroHabitacion = scanner.nextInt() - 1;
         if (numeroHabitacion >= 0 && numeroHabitacion < NUM_HABITACIONES) {
             if (estadoHabitaciones[numeroHabitacion] == null) {
                 System.out.print("¿Desea incluir alimentación? (S/N): ");
@@ -78,10 +78,10 @@ public class Main {
         }
     }
 
-    private static void liberarHabitacion() {
+    public static void liberarHabitacion() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Ingrese el número de habitación a liberar: ");
-        int numeroHabitacion = scanner.nextInt() - 1; // Restamos 1 para ajustar al índice del arreglo
+        int numeroHabitacion = scanner.nextInt() - 1;
         if (numeroHabitacion >= 0 && numeroHabitacion < NUM_HABITACIONES) {
             if (estadoHabitaciones[numeroHabitacion] != null) {
                 estadoHabitaciones[numeroHabitacion] = null;
@@ -94,3 +94,4 @@ public class Main {
         }
     }
 }
+
